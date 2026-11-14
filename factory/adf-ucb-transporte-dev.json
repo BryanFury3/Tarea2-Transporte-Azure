@@ -1,0 +1,10 @@
+{
+	"name": "adf-ucb-transporte-dev",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus"
+}
