@@ -1,0 +1,139 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nombre de instancia de Data Factory",
+			"defaultValue": "adf-ucb-transporte-dev"
+		},
+		"LS_Blob_Raw_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"connectionString\"de \"LS_Blob_Raw\""
+		},
+		"sa_transporte_accountKey": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"accountKey\"de \"sa_transporte\""
+		},
+		"sql_dw_transporte_password": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"password\"de \"sql_dw_transporte\""
+		},
+		"sql_erp_transporte_password": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"password\"de \"sql_erp_transporte\""
+		},
+		"sa_transporte_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://stucbsistelecomraw.dfs.core.windows.net/"
+		},
+		"sql_dw_transporte_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-ucb-sistelecom-dev-v3.database.windows.net"
+		},
+		"sql_dw_transporte_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dw_transporte"
+		},
+		"sql_dw_transporte_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "adminucb"
+		},
+		"sql_erp_transporte_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-ucb-sistelecom-dev-v3.database.windows.net"
+		},
+		"sql_erp_transporte_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "erp_transporte_db"
+		},
+		"sql_erp_transporte_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "adminucb"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI de la cuenta de almacenamiento que contiene las plantillas de ARM vinculadas."
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Token de SAS para la cuenta de almacenamiento que contiene las plantillas de ARM vinculadas"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf-ucb-transporte-dev_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"LS_Blob_Raw_connectionString": {
+						"value": "[parameters('LS_Blob_Raw_connectionString')]"
+					},
+					"sa_transporte_accountKey": {
+						"value": "[parameters('sa_transporte_accountKey')]"
+					},
+					"sql_dw_transporte_password": {
+						"value": "[parameters('sql_dw_transporte_password')]"
+					},
+					"sql_erp_transporte_password": {
+						"value": "[parameters('sql_erp_transporte_password')]"
+					},
+					"sa_transporte_properties_typeProperties_url": {
+						"value": "[parameters('sa_transporte_properties_typeProperties_url')]"
+					},
+					"sql_dw_transporte_properties_typeProperties_server": {
+						"value": "[parameters('sql_dw_transporte_properties_typeProperties_server')]"
+					},
+					"sql_dw_transporte_properties_typeProperties_database": {
+						"value": "[parameters('sql_dw_transporte_properties_typeProperties_database')]"
+					},
+					"sql_dw_transporte_properties_typeProperties_userName": {
+						"value": "[parameters('sql_dw_transporte_properties_typeProperties_userName')]"
+					},
+					"sql_erp_transporte_properties_typeProperties_server": {
+						"value": "[parameters('sql_erp_transporte_properties_typeProperties_server')]"
+					},
+					"sql_erp_transporte_properties_typeProperties_database": {
+						"value": "[parameters('sql_erp_transporte_properties_typeProperties_database')]"
+					},
+					"sql_erp_transporte_properties_typeProperties_userName": {
+						"value": "[parameters('sql_erp_transporte_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "adf-ucb-transporte-dev_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-ucb-transporte-dev_ArmTemplate_0')]"
+			]
+		}
+	]
+}
